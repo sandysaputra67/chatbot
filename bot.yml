@@ -1,0 +1,30 @@
+schema: kata.ai/schema/kata-ml/1.0
+name: pokemon-bot
+desc: Pokemon Bot for Test
+version: 0.0.25
+flows:
+    pokemon: $include(./flows/pokemon.yml)
+nlus:
+    info:
+        type: keyword
+        options:
+            keywords:
+                pokemon:
+                    - pokemon information
+    pokemon:
+        type: keyword
+        options:
+            keywords:
+                name:
+                    - pikachu
+                    - 1
+                    - 2
+                    - 3
+                    - 4
+                    - 5
+                    - 23
+                    - venusaur
+                    - bulbasaur
+                    - charmander
+tag: null
+id: 779ea0f3-0b74-4ede-a4be-a1823c16d6b0

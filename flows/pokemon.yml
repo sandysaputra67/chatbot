@@ -1,0 +1,77 @@
+intents:
+  hello:
+    initial: true
+    type: text
+    classifier:
+      nlu: info
+      match: pokemon
+  pokemon:
+    initial: true
+    type: text
+    classifier:
+      nlu: pokemon
+      match: name
+states:
+  init:
+    initial: true
+    transitions:
+      askPokemon:
+        condition: 'intent == "hello"'
+      init:
+        fallback: true
+  
+  askPokemon:
+    action:
+      - name: askPokemon
+    transitions:
+      answer:
+        condition: 'intent == "pokemon"'
+        mapping:
+          context.pokemon: content
+      other:
+        fallback: true
+        condition: 'intent != "hello"'
+        mapping:
+          context.pokemon: content
+  answer:
+    end: true
+    action:
+      - name : getPokemonAPI
+      - name : answer
+        # condition : "intent != 'hello' && (result.name != null || result.name != undefined || result.name != '')"
+      - name : sendImage
+        # condition : "intent != 'hello' && (result.name != null || result.name != undefined || result.name != '')"
+  other:
+    end: true
+    action:
+      - name : other
+actions:
+  askPokemon:
+    type: text
+    options:
+      text: 'Which Pokemon do you need the info for?'
+
+  # Open weather API returns temperature in Kelvin
+  getPokemonAPI:
+    type: api
+    options:
+      method: GET
+      uri: 'https://pokeapi.co/api/v2/pokemon/$(context.pokemon)/'
+
+  answer:
+    type: text
+    options:
+      text: '$(result.status) $(result.name) is an $(result.abilities[0].ability.name) type Pokemon with $(result.weight) weight and $(result.height) height, here is a picture of Pikachu'
+  sendImage:
+    type: 'template'
+    options:
+      type: 'image'
+      items:
+        originalContentUrl: '$(result.sprites.front_default)'
+        previewImageUrl: '$(result.sprites.front_default)'
+  other:
+    type: text
+    options:
+      text: "Sorry we don't have information for $(context.pokemon)"
+      # text: 'Gacha'
+      
