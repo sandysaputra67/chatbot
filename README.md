@@ -1,4 +1,4 @@
-# dependency-injection-mid
+# Simple CHATBOT using kata.ai platform
 Simple CHATBOT using kata.ai platform
 
 <h1 align="center">
