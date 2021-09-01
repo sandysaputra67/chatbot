@@ -51,12 +51,11 @@ actions:
     options:
       text: 'Which Pokemon do you need the info for?'
 
-  # Open weather API returns temperature in Kelvin
   getPokemonAPI:
     type: api
     options:
       method: GET
-      uri: 'https://pokeapi.co/api/v2/pokemon/$(context.pokemon)/'
+      uri: 'https://pokeapi.co/api/v2/pokemon/1/$(context.pokemon)/'
 
   answer:
     type: text
@@ -73,5 +72,5 @@ actions:
     type: text
     options:
       text: "Sorry we don't have information for $(context.pokemon)"
-      # text: 'Gacha'
+  
       
